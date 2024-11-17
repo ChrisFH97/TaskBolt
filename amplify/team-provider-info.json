@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-taskbolt-dev-c7c02-authRole",
+      "UnauthRoleArn": "arn:aws:iam::180294185721:role/amplify-taskbolt-dev-c7c02-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::180294185721:role/amplify-taskbolt-dev-c7c02-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-taskbolt-dev-c7c02-deployment",
+      "UnauthRoleName": "amplify-taskbolt-dev-c7c02-unauthRole",
+      "StackName": "amplify-taskbolt-dev-c7c02",
+      "StackId": "arn:aws:cloudformation:eu-north-1:180294185721:stack/amplify-taskbolt-dev-c7c02/402a6e00-a284-11ef-a6f0-0661b14130a7",
+      "AmplifyAppId": "d31xjfg89o1krm"
+    },
+    "categories": {
+      "auth": {
+        "taskbolt932506bc": {}
+      }
+    }
+  }
+}
