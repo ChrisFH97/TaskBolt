@@ -1,19 +1,20 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AuthScreen from '../screens/Authentication';
+import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
+import AuthScreen from '../screens/Authentication';
 import { useAuth } from '../contexts/AuthContext';
 import { ActivityIndicator, View } from 'react-native';
+import tw from 'twrnc';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={tw`flex-1 justify-center items-center`}>
         <ActivityIndicator size="large" color="#ed6c21" />
       </View>
     );
@@ -27,7 +28,7 @@ const AppNavigator = () => {
         </Stack.Navigator>
       ) : (
         <Stack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Authentication" component={AuthScreen} />
+          <Stack.Screen name="Auth" component={AuthScreen} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

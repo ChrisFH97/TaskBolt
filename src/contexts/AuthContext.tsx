@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import { Amplify } from 'aws-amplify';
-import { signUp, signIn, signOut, confirmSignUp } from 'aws-amplify/auth';
+import { signUp, signIn, signOut, confirmSignUp, getCurrentUser, fetchUserAttributes } from 'aws-amplify/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import awsconfig from '../aws-exports';
 
@@ -43,7 +43,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       username,
       password,
       options: {
-        userAttributes: { email, given_name: forename, family_name: surname, phone_number: number }
+        userAttributes: { email, given_name: forename, family_name: surname, phone_number: number, 'custom:Type': 'User' ,
+         }
       }
     });
   };
@@ -55,7 +56,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Sign in function
   const signInUser = async (username: string, password: string) => {
-    const user = await signIn({ username, password });
+    await signIn({ username, password });
+
+    let user = await getCurrentUser();
+    let attributes = await fetchUserAttributes();
+
+    user = {
+      ...user,
+      ...attributes,
+    };
+    
     setUser(user);
     setIsAuthenticated(true);
     await AsyncStorage.setItem('user', JSON.stringify(user));
