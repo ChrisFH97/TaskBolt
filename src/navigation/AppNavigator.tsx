@@ -5,7 +5,6 @@ import HomeScreen from '../screens/HomeScreen';
 import AuthScreen from '../screens/Authentication';
 import { useAuth } from '../contexts/AuthContext';
 import { ActivityIndicator, View } from 'react-native';
-import tw from 'twrnc';
 
 const Stack = createStackNavigator();
 
@@ -14,7 +13,7 @@ const AppNavigator = () => {
 
   if (loading) {
     return (
-      <View style={tw`flex-1 justify-center items-center`}>
+      <View className='flex-1 justify-center items-center'>
         <ActivityIndicator size="large" color="#ed6c21" />
       </View>
     );
