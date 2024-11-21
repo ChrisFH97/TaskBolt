@@ -12,13 +12,13 @@ const StatsOverview = ({ projectInvites, acceptedShifts, earnings }: StatsOvervi
   return (
     <View className="flex flex-row flex-wrap mb-6">
       <View className="w-full md:w-1/3 py-2">
-        <StatCard title="Project Invites" value={projectInvites} />
+        <StatCard title="Project Invites" value={projectInvites} icon="mail-outline" />
       </View>
       <View className="w-full md:w-1/3 md:p-2">
-        <StatCard title="Accepted Shifts" value={acceptedShifts} />
+        <StatCard title="Accepted Shifts" value={acceptedShifts} icon="checkmark-circle-outline" />
       </View>
       <View className="w-full md:w-1/3 py-2">
-        <StatCard title="Earnings" value={earnings} />
+        <StatCard title="Earnings" value={earnings} icon="cash-outline" />
       </View>
     </View>
   );
