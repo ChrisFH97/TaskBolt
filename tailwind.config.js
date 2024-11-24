@@ -17,6 +17,9 @@ module.exports = {
         xl: '1280px',
         '2xl': '1536px',
       },
+      maxWidth: {
+        modal: '480px',
+      }
     },
   },
   plugins: [],

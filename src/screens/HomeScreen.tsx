@@ -6,6 +6,7 @@ import { apiKey, mapId } from '../../Constants';
 import StatsOverview from '../components/HomeScreen/StatsOverview';
 import OrientationBanner from '../components/HomeScreen/Banner';
 import Header from '../components/Global/Header';
+import UpcomingShifts from '../components/HomeScreen/Shifts';
 
 interface Task {
   id: string;
@@ -13,6 +14,8 @@ interface Task {
   dueDate: Date;
   location: string;
   skillRequired: 'L1' | 'L2' | 'L3' | 'L4'; // Skill level
+  timeStart: Date;
+  timeEnd: Date;
   hourlyPay: number; // Hourly pay in GBP
   projectDetails: string; // Description of the project
   floormanName: string; // Name of the floorman
@@ -34,25 +37,29 @@ const HomeScreen = () => {
       {
         id: '1',
         title: 'Install TV Mount',
-        dueDate: new Date(),
+        dueDate: new Date('2024-11-23'),
         location: '4 Gala St, Glasgow, Scotland',
         skillRequired: 'L2',
-        hourlyPay: 15.0,
-        projectDetails: 'Install a 55-inch TV mount and tidy up cables.',
-        floormanName: 'John Smith',
-        floormanPhone: '+447911123456',
+        timeStart: new Date('2024-11-23T09:00:00'),
+        timeEnd: new Date('2024-11-23T13:00:00'),
+        hourlyPay: 20,
+        projectDetails: 'Install a wall-mounted TV for a client.',
+        floormanName: 'John Doe',
+        floormanPhone: '07123456789',
         installerShowedUp: true,
       },
       {
         id: '2',
         title: 'Home Theater Setup',
-        dueDate: new Date(),
+        dueDate: new Date('2024-11-24'),
         location: 'Odeon Luxe, Glasgow, Scotland',
         skillRequired: 'L3',
-        hourlyPay: 20.0,
-        projectDetails: 'Setup a 7.1 surround sound system in the luxury theater.',
-        floormanName: 'Jane Doe',
-        floormanPhone: '+447812345678',
+        timeStart: new Date('2024-11-24T10:00:00'),
+        timeEnd: new Date('2024-11-24T14:00:00'),
+        hourlyPay: 25,
+        projectDetails: 'Set up a home theater system.',
+        floormanName: 'Jane Smith',
+        floormanPhone: '07123456788',
         installerShowedUp: false,
       },
     ];
@@ -65,7 +72,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <View className="flex-1 bg-white">
+    <ScrollView className="flex-1 bg-white">
 
       <Header tasks={tasks} />
 
@@ -81,10 +88,15 @@ const HomeScreen = () => {
 
         <StatsOverview projectInvites={2} acceptedShifts={1} earnings="£2,340.00" />
 
+        <View className="">
+          <UpcomingShifts tasks={tasks} />
+        </View>
+
+
       </View>
 
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
