@@ -64,8 +64,8 @@ const Header = ({ tasks }: HeaderProps) => {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* Mobile Popout Menu */}
+  
+        {/* Mobile Menu */}
       {isMenuOpen && (
         <View className="lg:hidden bg-[#f8f9fa]">
           <TouchableOpacity

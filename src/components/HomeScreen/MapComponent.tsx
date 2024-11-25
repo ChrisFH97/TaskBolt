@@ -54,7 +54,6 @@ const MapComponent: React.FC<MapComponentProps> = ({ address, label, apiKey, map
           mapId: mapId,
         });
 
-        // Ensure AdvancedMarkerElement is defined
         if (google?.maps?.marker?.AdvancedMarkerElement) {
           new google.maps.marker.AdvancedMarkerElement({
             position: coords,
