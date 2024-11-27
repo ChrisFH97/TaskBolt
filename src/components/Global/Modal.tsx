@@ -10,7 +10,7 @@ interface GenericModalProps {
 
 const GenericModal: React.FC<GenericModalProps> = ({ visible, onClose, title, children }) => {
   return (
-    <Modal animationType="slide" transparent visible={visible} onRequestClose={onClose}>
+    <Modal animationType="fade" transparent visible={visible} onRequestClose={onClose}>
       <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
         <View className="bg-white w-4/5 rounded-lg p-6 w-[90%] max-w-modal">
           {title && <Text className="text-xl font-bold text-center mb-4">{title}</Text>}

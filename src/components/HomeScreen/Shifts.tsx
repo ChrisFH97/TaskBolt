@@ -49,29 +49,41 @@ const UpcomingShifts = ({ tasks }: UpcomingShiftsProps) => {
     loadGoogleMapsScript();
   }, []);
 
-  const shifts = tasks.map((task) => ({
-    day: task.dueDate.toLocaleDateString('en-GB', {
-      weekday: 'short',
-      day: '2-digit',
-      month: '2-digit',
-    }),
-    shiftDetails: `${new Date(task.timeStart).toLocaleTimeString('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit',
-    })} - ${new Date(task.timeEnd).toLocaleTimeString('en-GB', {
-      hour: '2-digit',
-      minute: '2-digit',
-    })}`,
-    task,
-  }));
+  // Generate the next 5 days
+  const generateNextFiveDays = () => {
+    const days = [];
+    const today = new Date();
+    for (let i = 0; i < 5; i++) {
+      const day = new Date(today);
+      day.setDate(today.getDate() + i);
+      days.push({
+        day: day.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: '2-digit' }),
+        date: day,
+        tasks: [],
+      });
+    }
+    return days;
+  };
 
-  const groupedShifts = shifts.reduce((acc, shift) => {
-    if (!acc[shift.day]) acc[shift.day] = [];
-    acc[shift.day].push(shift);
-    return acc;
-  }, {} as Record<string, typeof shifts>);
-
-  const nextFiveDays = Object.entries(groupedShifts).slice(0, 5);
+  // Map tasks to the corresponding days
+  const nextFiveDays = generateNextFiveDays().map((day) => {
+    const dayTasks = tasks.filter(
+      (task) => new Date(task.dueDate).toDateString() === day.date.toDateString()
+    );
+    return {
+      ...day,
+      tasks: dayTasks.map((task) => ({
+        shiftDetails: `${new Date(task.timeStart).toLocaleTimeString('en-GB', {
+          hour: '2-digit',
+          minute: '2-digit',
+        })} - ${new Date(task.timeEnd).toLocaleTimeString('en-GB', {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`,
+        task,
+      })),
+    };
+  });
 
   const openModal = (task: Task) => {
     setSelectedTask(task);
@@ -87,21 +99,21 @@ const UpcomingShifts = ({ tasks }: UpcomingShiftsProps) => {
     <View className="mt-2">
       <Text className="text-2xl font-bold text-taskbolt-blue">Your Upcoming Shifts</Text>
       <View className="mt-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {nextFiveDays.map(([day, shiftDetails], index) => (
+        {nextFiveDays.map(({ day, tasks }, index) => (
           <View
             key={index}
             className="border rounded-md p-4 bg-white shadow-sm"
           >
             <Text className="font-semibold text-sm text-taskbolt-blue">{day}</Text>
-            {shiftDetails.length > 0 ? (
+            {tasks.length > 0 ? (
               <View className="mt-2 space-y-1">
-                {shiftDetails.map(({ shiftDetails: times, task }, idx) => (
+                {tasks.map(({ shiftDetails, task }, idx) => (
                   <TouchableOpacity
                     key={idx}
                     onPress={() => openModal(task)}
                     className="text-xs text-gray-700 hover:bg-gray-100 hover:shadow-lg p-1 rounded-md"
                   >
-                    <Text className="text-xs text-gray-700">{times}</Text>
+                    <Text className="text-xs text-gray-700">{shiftDetails}</Text>
                     <Text className="text-[10px] text-gray-500">Tap for details</Text>
                   </TouchableOpacity>
                 ))}
